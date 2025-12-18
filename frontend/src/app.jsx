@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
 import Layout from './components/Layout.jsx';
 import Home from './pages/Home.jsx';
 import JeeMains from './pages/JeeMains.jsx';
@@ -10,22 +10,25 @@ import Profile from './pages/Profile.jsx';
 import TalkToSenior from './pages/TalkToSenior.jsx';
 import Pricing from './pages/Pricing.jsx';
 import AiCounsellor from './pages/AiCounsellor.jsx';
-
-// Example ProtectedRoute component (you might want to create this in a separate file)
 import { useAuth } from './context/AuthContext.jsx';
-import { Navigate, Outlet } from 'react-router-dom';
+import Checkout from './pages/Checkout';
 
+// --- ProtectedRoute Component ---
+// This checks if a user is logged in and/or has premium
 const ProtectedRoute = ({ children, premiumOnly = false }) => {
   const { userInfo } = useAuth();
+
   if (!userInfo) {
     // Not logged in, redirect to login
     return <Navigate to="/login" replace />;
   }
+
   if (premiumOnly && userInfo.subscription !== 'premium') {
     // Logged in but not premium, redirect to pricing
     return <Navigate to="/pricing" replace />;
   }
-  // Logged in (and has premium if required), render the child component or Outlet
+
+  // User is authorized, render the component
   return children ? children : <Outlet />;
 };
 
@@ -46,18 +49,17 @@ function App() {
         {/* Protected Routes (Require Login) */}
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<Profile />} />
-          {/* Add other routes needing login but not premium */}
+          {/* <Route path="/dashboard" element={<Dashboard />} /> */} {/* Removed this */}
         </Route>
-
-        {/* Premium Protected Routes (Require Login + Premium Sub) */}
+        <Route path="/checkout" element={<Checkout />} />
+        {/* Premium Protected Routes (Require Login + Premium) */}
          <Route element={<ProtectedRoute premiumOnly={true} />}>
             <Route path="/talk-to-senior" element={<TalkToSenior />} />
             <Route path="/ai-counsellor" element={<AiCounsellor />} />
-            {/* Add other premium routes here */}
          </Route>
 
         {/* Optional: Add a 404 Not Found route */}
-        {/* <Route path="*" element={<NotFound />} /> */}
+        {/* <Route path="*" element={<div>404 Not Found</div>} /> */}
       </Routes>
     </Layout>
   );

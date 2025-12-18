@@ -15,12 +15,31 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const saveLogin = (data) => {
+    // This function is called by Login, VerifyEmail, and Profile Update
+    // It must store ALL user data returned from the backend
     const userDataToStore = {
-       _id: data._id, name: data.name, email: data.email, subscription: data.subscription,
-       jee_mains_crl_rank: data.jee_mains_crl_rank, jee_mains_category: data.jee_mains_category, jee_mains_category_rank: data.jee_mains_category_rank,
-       jee_advanced_crl_rank: data.jee_advanced_crl_rank, jee_advanced_category: data.jee_advanced_category, jee_advanced_category_rank: data.jee_advanced_category_rank,
-       createdAt: data.createdAt, updatedAt: data.updatedAt, // Store updatedAt too
-       token: data.token || userInfo?.token // Keep existing token if not re-issued
+       _id: data._id,
+       name: data.name,
+       email: data.email,
+       subscription: data.subscription,
+       // --- NEW FIELDS ---
+       mobile: data.mobile,
+       addressState: data.addressState,
+       home_state: data.home_state,
+       jee_mains_pws: data.jee_mains_pws,
+       isEmailVerified: data.isEmailVerified,
+       isMobileVerified: data.isMobileVerified,
+       // --- Rank Fields ---
+       jee_mains_crl_rank: data.jee_mains_crl_rank,
+       jee_mains_category: data.jee_mains_category,
+       jee_mains_category_rank: data.jee_mains_category_rank,
+       jee_advanced_crl_rank: data.jee_advanced_crl_rank,
+       jee_advanced_category: data.jee_advanced_category,
+       jee_advanced_category_rank: data.jee_advanced_category_rank,
+       // --- Timestamps & Token ---
+       createdAt: data.createdAt,
+       updatedAt: data.updatedAt,
+       token: data.token || userInfo?.token // Keep old token if not re-issued (e.g., on profile update)
     };
     localStorage.setItem('userInfo', JSON.stringify(userDataToStore));
     setUserInfo(userDataToStore);
