@@ -11,7 +11,7 @@ import TalkToSenior from './pages/TalkToSenior.jsx';
 import Pricing from './pages/Pricing.jsx';
 import AiCounsellor from './pages/AiCounsellor.jsx';
 import { useAuth } from './context/AuthContext.jsx';
-import Checkout from './pages/Checkout';
+import Checkout from './pages/Checkout.jsx';
 
 // --- ProtectedRoute Component ---
 // This checks if a user is logged in and/or has premium
