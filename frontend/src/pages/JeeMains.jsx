@@ -144,8 +144,6 @@ export default function JeeMains() {
 
     const basePayload = {
         student_category: formData.student_category || null,
-        category_rank: categoryRankToSend,
-        crl_rank: formData.crl_rank,
         gender: formData.gender,
         home_state: formData.home_state || null,
         branch: formData.branch || [],
