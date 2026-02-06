@@ -23,7 +23,7 @@ export default function JeeAdvanced() {
     category_rank: userInfo?.jee_advanced_category_rank || undefined,
     crl_rank: userInfo?.jee_advanced_crl_rank || undefined,
     gender: 'Male',
-    pws: false, e
+    pws: false, 
     branch: [],
     limit: 100
   });
