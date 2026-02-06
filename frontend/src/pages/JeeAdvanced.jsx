@@ -61,7 +61,7 @@ export default function JeeAdvanced() {
   useEffect(() => {
     const fetchBranches = async () => {
       try {
-        const response = await api.get('/data/branches');
+        const response = await api.get('api/data/branches');
         // TODO: Ideally, filter/fetch only IIT branches
         setAllBranches(response.data || []);
       } catch (err) { console.error("Failed to fetch branches:", err); }
@@ -112,7 +112,7 @@ export default function JeeAdvanced() {
     const payload = { ...formData, category_rank: categoryRankToSend };
 
     try {
-      const response = await api.post('/data/predict/advanced', payload);
+      const response = await api.post('api/data/predict/advanced', payload);
       setResults(Array.isArray(response.data) ? response.data : []);
     } catch (err) { setError(err.response?.data?.error || "Failed to fetch results."); console.error(err); }
     finally { setIsLoading(false); setIsSubmitted(true); }
