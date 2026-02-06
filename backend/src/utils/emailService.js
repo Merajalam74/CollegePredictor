@@ -10,7 +10,7 @@ const createTransport = () => {
   // Use Gmail/SMTP
   return nodemailer.createTransport({
     host: process.env.EMAIL_HOST,
-    port: Number(process.env.EMAIL_PORT), // Ensure this is a number
+    port: Number(process.env.EMAIL_PORT), 
     secure: true, // Use SSL
     auth: {
       user: process.env.EMAIL_USER,
@@ -41,7 +41,7 @@ export const sendVerificationEmail = async (to, otp) => {
     } else {
       const transporter = createTransport();
       const info = await transporter.sendMail({
-        from: process.env.EMAIL_FROM, // e.g., "College Predictor <meraj@gmail.com>"
+        from: process.env.EMAIL_FROM, 
         to,
         subject: 'Verify Your Email Address',
         html,
@@ -50,8 +50,7 @@ export const sendVerificationEmail = async (to, otp) => {
     }
   } catch (error) {
     console.error('❌ Error sending email:', error.message);
-    // Optional: Throw error if you want the frontend to know it failed
-    // throw new Error("Email could not be sent"); 
+    
   }
 };
 export const sendOrderConfirmationEmail = async (to, name, orderId) => {
