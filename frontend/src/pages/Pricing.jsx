@@ -14,7 +14,7 @@ export default function Pricing() {
     if (!userInfo) {
       navigate('/login?redirect=pricing');
     } else {
-      navigate('/checkout'); // Redirects to the new checkout page
+      navigate('/checkout'); 
     }
   };
 
