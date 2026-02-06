@@ -46,12 +46,12 @@ export const AuthProvider = ({ children }) => {
   };
 
   const login = async (email, password) => {
-    try { const { data } = await api.post('/auth/login', { email, password }); saveLogin(data); return data; }
+    try { const { data } = await api.post('api/auth/login', { email, password }); saveLogin(data); return data; }
     catch (error) { console.error('Login failed', error); throw error; }
   };
 
   const signup = async (formData) => {
-    try { const { data } = await api.post('/auth/register', formData); return data; }
+    try { const { data } = await api.post('api/auth/register', formData); return data; }
     catch (error) { console.error('Signup failed', error); throw error; }
   };
 
