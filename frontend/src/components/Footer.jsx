@@ -6,7 +6,6 @@ import { Button } from "@/components/ui/button.jsx";
 
 export default function Footer() {
   return (
-    // Use a slightly darker grey for the footer background
     <footer className="bg-gray-100 dark:bg-gray-900 border-t border-gray-200 dark:border-gray-700 pt-16 pb-8">
       <div className="container mx-auto px-4 lg:px-6">
 
