@@ -13,22 +13,16 @@ import AiCounsellor from './pages/AiCounsellor.jsx';
 import { useAuth } from './context/AuthContext.jsx';
 import Checkout from './pages/Checkout.jsx';
 
-// --- ProtectedRoute Component ---
-// This checks if a user is logged in and/or has premium
 const ProtectedRoute = ({ children, premiumOnly = false }) => {
   const { userInfo } = useAuth();
 
   if (!userInfo) {
-    // Not logged in, redirect to login
     return <Navigate to="/login" replace />;
   }
 
   if (premiumOnly && userInfo.subscription !== 'premium') {
-    // Logged in but not premium, redirect to pricing
     return <Navigate to="/pricing" replace />;
   }
-
-  // User is authorized, render the component
   return children ? children : <Outlet />;
 };
 
@@ -49,7 +43,6 @@ function App() {
         {/* Protected Routes (Require Login) */}
         <Route element={<ProtectedRoute />}>
           <Route path="/profile" element={<Profile />} />
-          {/* <Route path="/dashboard" element={<Dashboard />} /> */} {/* Removed this */}
         </Route>
         <Route path="/checkout" element={<Checkout />} />
         {/* Premium Protected Routes (Require Login + Premium) */}
@@ -57,9 +50,7 @@ function App() {
             <Route path="/talk-to-senior" element={<TalkToSenior />} />
             <Route path="/ai-counsellor" element={<AiCounsellor />} />
          </Route>
-
-        {/* Optional: Add a 404 Not Found route */}
-        {/* <Route path="*" element={<div>404 Not Found</div>} /> */}
+          <Route path="*" element={<div>404 Not Found</div>} /> 
       </Routes>
     </Layout>
   );
