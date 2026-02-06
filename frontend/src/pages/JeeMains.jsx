@@ -75,7 +75,7 @@ export default function JeeMains() {
   useEffect(() => {
     const fetchBranches = async () => {
         try {
-            const response = await api.get('/data/branches');
+            const response = await api.get('api/data/branches');
             setAllBranches(response.data || []);
           } catch (err) { console.error("Failed to fetch branches:", err); }
     };
