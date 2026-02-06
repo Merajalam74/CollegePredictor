@@ -3,7 +3,7 @@ import Layout from './components/Layout.jsx';
 import Home from './pages/Home.jsx';
 import JeeMains from './pages/JeeMains.jsx';
 import JeeAdvanced from './pages/JeeAdvanced.jsx';
-import Signup from './pages/Signup.jsx';
+import Signup from './pages/SignUp.jsx';
 import Login from './pages/Login.jsx';
 import VerifyEmail from './pages/VerifyEmail.jsx';
 import Profile from './pages/Profile.jsx';
