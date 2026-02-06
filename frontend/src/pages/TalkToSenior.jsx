@@ -7,7 +7,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 import { Alert, AlertTitle, AlertDescription } from "@/components/ui/alert.jsx";
 import { Link } from 'react-router-dom';
 
-// MOCK DATA: Later, you will fetch this from your database
+
 const seniors = [
   { id: 1, name: 'Rohan Sharma', college: 'IIT Bombay', branch: 'Computer Science', year: 4, rating: 4.8 },
   { id: 2, name: 'Priya Singh', college: 'NIT Trichy', branch: 'Electronics & Comm.', year: 3, rating: 4.9 },
