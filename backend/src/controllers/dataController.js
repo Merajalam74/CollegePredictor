@@ -2,9 +2,9 @@ import JeeMainsCutoff from '../models/JeeMainsCutoff.js';
 import JeeAdvancedCutoff from '../models/JeeAdvancedCutoff.js';
 
 // --- Constants for Rank Filtering (The "Range") ---
-const LOWER_RANK_FACTOR = 0.9;      // 90% of user's rank
-const UPPER_RANK_FACTOR = 1.20;     // 120% of user's rank (OPEN/CRL)
-const UPPER_CATEGORY_FACTOR = 1.15; // 115% of user's rank (CATEGORY)
+const LOWER_RANK_FACTOR = 0.9;     
+const UPPER_RANK_FACTOR = 1.20;    
+const UPPER_CATEGORY_FACTOR = 1.15; 
 
 // --- Get Branches ---
 export const getBranches = async (req, res) => {
@@ -33,7 +33,7 @@ export const predictMains = async (req, res) => {
   const queryLimit = Number(limit) || 100;
   const userCategory = (student_category || 'OPEN').toUpperCase();
   const isCategoryUser = userCategory !== 'OPEN';
-  const type = counseling_type; // The single counseling type from this request
+  const type = counseling_type; 
 
   // --- Validation ---
   if (!crl_rank || !gender || !home_state || home_state === 'NONE' || home_state === '' || !type) {
@@ -50,7 +50,7 @@ export const predictMains = async (req, res) => {
     console.log(`\n--- [predictMains] Building Query for ${type} ---`);
     let query = {
         CounselingType: type,
-        Quota: { "$nin": ["GO", "JK", "LA", "LD"] } // Exclude special quotas
+        Quota: { "$nin": ["GO", "JK", "LA", "LD"] } 
     };
 
     // --- Common Filters ---
@@ -100,13 +100,10 @@ export const predictMains = async (req, res) => {
          return res.json([]);
     }
 
-    // --- *** CORRECTED: Quota Eligibility Logic for BOTH JOSAA & CSAB *** ---
+    // --- Quota Eligibility Logic for BOTH JOSAA & CSAB *** ---
     const quotaConditions = [
-       // 1. NIT in Home State (e.g., Bihar): Show HS and AI
        { IsNIT: true, State: home_state, Quota: { $in: ["HS", "AI"] } },
-       // 2. NIT NOT in Home State (e.g., Tamil Nadu): Show OS and AI
        { IsNIT: true, State: { $ne: home_state }, Quota: { $in: ["OS", "AI"] } },
-       // 3. Non-NITs (IIITs, GFTIs): Show AI and OS
        { IsNIT: false, Quota: { $in: ["AI", "OS"] } }
     ];
     query.$and.push({ $or: quotaConditions });
@@ -116,14 +113,13 @@ export const predictMains = async (req, res) => {
     // --- Execute Query ---
     console.log(`[predictMains] Final ${type} Query:`, JSON.stringify(query, null, 2));
     const typeResults = await JeeMainsCutoff.find(query)
-      // --- *** SORT BY EQUIVALENT OPEN RANK FIRST *** ---
       .sort({ equivalentOpenCrl: 1, ClosingRank: 1 })
       .limit(queryLimit)
       .lean();
 
     console.log(`---> [predictMains] Found ${typeResults.length} ${type} results in DB.`);
     
-    res.json(typeResults); // Return the array
+    res.json(typeResults); 
 
   } catch (e) {
     console.error(`[predictMains] Error: ${e.message}`, e.stack);
@@ -175,13 +171,12 @@ export const predictAdvanced = async (req, res) => {
 
         console.log("[predictAdvanced] Executing Query:", JSON.stringify(query, null, 2));
         const advResults = await JeeAdvancedCutoff.find(query)
-          // --- *** SORT BY EQUIVALENT OPEN RANK FIRST *** ---
           .sort({ equivalentOpenCrl: 1, ClosingRank: 1 })
           .limit(queryLimit)
           .lean();
 
         console.log(`---> [predictAdvanced] Found ${advResults.length} results in DB.`);
-        res.json(advResults); // Returns an array
+        res.json(advResults); 
 
       } catch (e) {
         console.error(`[predictAdvanced] Error: ${e.message}`, e.stack);
