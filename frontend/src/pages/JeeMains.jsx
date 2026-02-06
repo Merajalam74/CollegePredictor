@@ -13,28 +13,27 @@ import api from '../api/index.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import CounselingSelector from '../components/CounselingSelector.jsx';
 import { Link } from 'react-router-dom';
-import { indianStates } from '../utils/constants.js'; // Verify this path is correct
+import { indianStates } from '../utils/constants.js'; 
 
-// --- Constants ---
 const COUNSELING_TYPES = ["JOSAA", "CSAB"];
 const DEFAULT_COUNSELING = "JOSAA";
 
 export default function JeeMains() {
   const { userInfo } = useAuth();
 
-  // State for fetched results keyed by counseling type
+  
   const [resultsData, setResultsData] = useState({ JOSAA: [], CSAB: [] });
-  // State for which counseling tab is currently active
+  
   const [displayedCounseling, setDisplayedCounseling] = useState(DEFAULT_COUNSELING);
 
-  // Initialize form state, ensuring arrays are always initialized
+  
   const [formData, setFormData] = useState({
     selectedFormCounselings: [],
     student_category: userInfo?.jee_mains_category || '',
     category_rank: userInfo?.jee_mains_category_rank || undefined,
     crl_rank: userInfo?.jee_mains_crl_rank || undefined,
     gender: 'Male',
-    home_state: userInfo?.home_state || '', // <-- Home state auto-fill (initial)
+    home_state: userInfo?.home_state || '', 
     pws: userInfo?.jee_mains_pws || false,
     branch: [],
     limit: 100
@@ -42,20 +41,20 @@ export default function JeeMains() {
 
   // Other UI states
   const [allBranches, setAllBranches] = useState([]);
-  const [openBranchPopover, setOpenBranchPopover] = useState(false); // For Form
-  const [openCounselingPopover, setOpenCounselingPopover] = useState(false); // For Form
+  const [openBranchPopover, setOpenBranchPopover] = useState(false); 
+  const [openCounselingPopover, setOpenCounselingPopover] = useState(false); 
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [resultLimit, setResultLimit] = useState(100); // For Display Limit
+  const [resultLimit, setResultLimit] = useState(100); 
 
   // Filter states
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedCollegeTypes, setSelectedCollegeTypes] = useState([]);
   const [selectedFilterBranches, setSelectedFilterBranches] = useState([]);
-  const [openFilterBranchPopover, setOpenFilterBranchPopover] = useState(false); // For Filter Bar
+  const [openFilterBranchPopover, setOpenFilterBranchPopover] = useState(false); 
 
-  // Effect to auto-apply user ranks and details
+  
   useEffect(() => {
     if (userInfo) {
       setFormData(prevData => ({
@@ -64,7 +63,7 @@ export default function JeeMains() {
         student_category: userInfo.jee_mains_category || prevData.student_category || '',
         category_rank: userInfo.jee_mains_category_rank || prevData.category_rank,
         crl_rank: userInfo.jee_mains_crl_rank || prevData.crl_rank,
-        home_state: userInfo.home_state || prevData.home_state || '', // <-- Home state auto-fill (update)
+        home_state: userInfo.home_state || prevData.home_state || '', 
         pws: userInfo.jee_mains_pws ?? prevData.pws ?? false,
         branch: prevData.branch || [],
       }));
@@ -149,11 +148,10 @@ export default function JeeMains() {
         branch: formData.branch || [],
         limit: formData.limit || 100,
         pws: formData.pws || false,
-        category_rank: isCategoryUser ? Number(formData.category_rank) : undefined, // Ensure it's a Number
-        crl_rank: Number(formData.crl_rank), // Ensure it's a Number
+        category_rank: isCategoryUser ? Number(formData.category_rank) : undefined, 
+        crl_rank: Number(formData.crl_rank), 
     };
 
-    // --- FIX: Send one request per type and wait for all ---
     const requests = counselingsToFetch.map(type =>
       api.post('api/data/predict/mains', { ...basePayload, counseling_type: type })
     );
@@ -165,7 +163,7 @@ export default function JeeMains() {
 
        responses.forEach((response, index) => {
          const counselingType = counselingsToFetch[index];
-         // Backend now returns an array, so response.value.data is correct
+         
          const responseData = response.status === 'fulfilled' && Array.isArray(response.value?.data) ? response.value.data : [];
          
          if (counselingType === 'JOSAA') newResultsData.JOSAA = responseData;
@@ -226,7 +224,7 @@ export default function JeeMains() {
     });
   };
 
-  // --- Other derived state ---
+  
   const availableCounselingResults = Object.keys(resultsData).filter(key => Array.isArray(resultsData[key]) && resultsData[key].length > 0);
   const isCategorySelected = formData.student_category && formData.student_category !== 'OPEN';
 
@@ -264,7 +262,7 @@ export default function JeeMains() {
               </PopoverContent>
             </Popover>
 
-            {/* Home State Selector (AUTO-FILLED) */}
+            
             <Select name="home_state" value={formData.home_state} onValueChange={handleSelectChange('home_state')} required>
                 <SelectTrigger id="home-state-select"><SelectValue placeholder="Select Home State *" /></SelectTrigger>
                 <SelectContent>
@@ -273,7 +271,7 @@ export default function JeeMains() {
                 </SelectContent>
             </Select>
 
-            {/* Category and Ranks (AUTO-FILLED & CONDITIONAL) */}
+            
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                <Select name="student_category" value={formData.student_category} onValueChange={handleSelectChange('student_category')} required>
                  <SelectTrigger id="mains-category-select"><SelectValue placeholder="Select Category *" /></SelectTrigger>
@@ -282,18 +280,18 @@ export default function JeeMains() {
                  </SelectContent>
                </Select>
                
-               {/* --- CONDITIONAL RENDER --- */}
+              
                {isCategorySelected ? (
                   <Input id="mains-category-rank" type="number" name="category_rank" placeholder="Category Rank *" value={formData.category_rank ?? ''} onChange={handleInputChange} min={1} required={isCategorySelected}/>
                ) : (
                   <div className="h-[40px] hidden md:block" aria-hidden="true"></div>
                )}
-               {/* --- END CONDITIONAL --- */}
+               
                
                <Input id="mains-crl-rank" type="number" name="crl_rank" placeholder="CRL Rank *" value={formData.crl_rank ?? ''} onChange={handleInputChange} min={1} required />
             </div>
 
-             {/* Gender & PwD (AUTO-FILLED) */}
+             
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                <Select name="gender" value={formData.gender} onValueChange={handleSelectChange('gender')} required>
                   <SelectTrigger id="mains-gender-select"><SelectValue placeholder="Select Gender *" /></SelectTrigger>
@@ -313,7 +311,7 @@ export default function JeeMains() {
                </div>
              </div>
 
-            {/* Branch Multi-Select */}
+            
             <Popover open={openBranchPopover} onOpenChange={setOpenBranchPopover}>
                <PopoverTrigger asChild>
                  <Button variant="outline" role="combobox" aria-expanded={openBranchPopover} className="w-full justify-between font-normal">
@@ -336,7 +334,7 @@ export default function JeeMains() {
                </PopoverContent>
             </Popover>
 
-            {/* Result Limit Select */}
+         
             <div className="flex justify-end pt-2">
                  <Select onValueChange={handleLimitChange} defaultValue={resultLimit.toString()}>
                     <SelectTrigger className="w-full md:w-[180px]">
@@ -348,7 +346,7 @@ export default function JeeMains() {
                  </Select>
             </div>
 
-            {/* Submit Button */}
+            
             <Button type="submit" className="w-full" disabled={isLoading}>
                  {isLoading && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
                  {isLoading ? "Finding Colleges..." : "Find Eligible Colleges"}
@@ -357,7 +355,7 @@ export default function JeeMains() {
         </CardContent>
       </Card>
 
-      {/* --- Results Section --- */}
+     
       {isSubmitted && !isLoading && (
         <div className="mt-12">
            {error && ( <Alert variant="destructive" className="mb-6"> <AlertCircle className="h-4 w-4" /> <AlertTitle>Error</AlertTitle> <AlertDescription>{error}</AlertDescription> </Alert> )}
