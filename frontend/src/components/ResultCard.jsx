@@ -4,12 +4,10 @@ import { Badge } from "@/components/ui/badge.jsx";
 import { Button } from "@/components/ui/button.jsx";
 import { ArrowRight, Trophy, TrendingUp } from 'lucide-react';
 
-// Helper for Badge Colors
 const getBadgeColor = (type, value) => {
     const val = (value || '').toLowerCase();
     
     if (type === 'allotted') {
-        // Special highlighting if a category student gets an OPEN seat
         if (val === 'open') return 'bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900 dark:text-emerald-100';
         return 'bg-blue-50 text-blue-700 border-blue-100 dark:bg-blue-900 dark:text-blue-100';
     }
@@ -28,14 +26,11 @@ const getBadgeColor = (type, value) => {
 };
 
 export function ResultCard({ result }) {
-    // Determine if this is a "Merit Upgrade" (Category student got Open Seat)
-    // We assume if allottedVia is OPEN but the Seat Category might be different in database context, 
-    // or simply if the badge says "OPEN".
     const allottedVia = result.allottedVia || result.Category;
     const isMeritSeat = allottedVia === 'OPEN';
     
     // Safety check for ranks
-    const closingRank = result.ClosingRank || result.Closing_Rank; // Handle different casing if any
+    const closingRank = result.ClosingRank || result.Closing_Rank; 
     const equivRank = result.equivalentOpenRank;
 
     return (
