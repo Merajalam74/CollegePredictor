@@ -4,21 +4,13 @@ import { Button } from '@/components/ui/button.jsx';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card.jsx';
 import { GraduationCap, Rocket, MessageSquare, Sparkles, CheckCircle, BarChart } from 'lucide-react';
 import { useAuth } from '../context/AuthContext.jsx';
-// --- IMPORTANT: Save images to src/assets and import ---
-// import dashboardSnapshot from '../assets/dashboard_snapshot.png'; // Example path
-// import testimonial1 from '../assets/testimonial1.png'; // Example path
-// import testimonial2 from '../assets/testimonial2.png'; // Example path
-// If you don't have the images yet, comment out the <img/> tags below
 
 export default function Home() {
   const { userInfo } = useAuth(); 
   return (
-
-    // Removed outer container - Layout provides it
     <div className="animate-in fade-in-50 duration-500 -mt-10 -mx-4 md:-mx-10"> {/* Negative margin to extend sections */}
 
       {/* --- Hero Section --- */}
-      {/* Use primary-blue gradient */}
       <section className="text-center py-16 md:py-24 bg-gradient-to-b from-primary-blue to-blue-700 text-white">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 leading-tight">
@@ -28,28 +20,23 @@ export default function Home() {
             Get into the right college and thrive from day one. College Predictor blends historical data, AI predictions, and real mentor wisdom so you can make confident decisions.
           </p>
           {/* --- 3. Conditional Button Rendering --- */}
-          {!userInfo && ( // Only show these buttons if user is NOT logged in
+          {!userInfo && (
             <div className="flex flex-wrap gap-4 justify-center mb-16">
               <Link to="/signup">
-                {/* White button */}
                 <Button size="lg" className="bg-white text-primary-blue hover:bg-gray-100 font-semibold shadow-md px-6 py-3">
                   Create your free account
                 </Button>
               </Link>
               <Link to="/jee-mains">
-                 {/* Outline button, adjusted for blue background */}
                  <Button size="lg" variant="outline" className="text-black border-white hover:bg-white/10 font-semibold shadow-md px-6 py-3">
                    Explore Predictors
                  </Button>
               </Link>
             </div>
           )}
-          {/* If user IS logged in, the buttons above are simply not rendered */}
-          {/* You could optionally add a different button here for logged-in users, e.g.: */}
           {userInfo && (
             <div className="mb-16">
                <Link to="/jee-mains">
-                 {/* Outline button, adjusted for blue background */}
                  <Button size="lg" variant="outline" className="text-black border-white hover:bg-white/10 font-semibold shadow-md px-6 py-3">
                    Explore Predictors
                  </Button>
@@ -59,7 +46,7 @@ export default function Home() {
 
           {/* Stats Section */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto text-left">
-            {/* Cards with blue background */}
+           
             <div className="bg-white/10 backdrop-blur-sm p-6 rounded-lg shadow-lg border border-white/20">
               <p className="text-4xl font-bold text-white mb-2">25K+</p>
               <p className="text-blue-100">Students guided</p>
@@ -81,7 +68,7 @@ export default function Home() {
          <div className="container mx-auto px-4 text-center">
              <h2 className="text-3xl font-bold mb-4 text-gray-900 dark:text-gray-100">Snapshot of your personalized dashboard</h2>
              <p className="text-lg text-gray-600 dark:text-gray-400 mb-8 max-w-2xl mx-auto">Predictions, mentors, learning progress — all in one place.</p>
-             {/* Replace with your actual image path or remove */}
+          
              {/* <img src={dashboardSnapshot} alt="Personalized Dashboard Snapshot" className="max-w-md mx-auto rounded-lg shadow-xl border dark:border-gray-700"/> */}
              <div className="bg-gray-200 dark:bg-gray-700 h-64 max-w-md mx-auto rounded-lg shadow-xl border dark:border-gray-600 flex items-center justify-center text-gray-500">
                 (Dashboard Image Placeholder)
@@ -150,14 +137,14 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- Testimonials Section --- */}
+    
        <section className="py-16 md:py-20 bg-white dark:bg-gray-950">
          <div className="container mx-auto px-4">
              <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">Don't just take our word for it</h2>
              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
-                {/* Replace with image or keep Card */}
+                
                  <Card className="bg-gray-800 text-white p-6 shadow-xl rounded-lg border border-gray-700">
-                    <CardContent className="pt-6"> {/* Added padding top */}
+                    <CardContent className="pt-6"> 
                        <p className="text-lg italic mb-4">"The predictions gave me clarity in the final counseling rounds and pairing with a mentor made all the difference."</p>
                        <p className="font-semibold">Aditi Sharma</p>
                        <p className="text-sm text-gray-400">B.Tech CSE, NIT Jaipur</p>
@@ -174,7 +161,7 @@ export default function Home() {
          </div>
       </section>
 
-       {/* --- Final CTA Section --- */}
+       
       <section className="py-16 md:py-24 text-center bg-gradient-to-t from-blue-50 to-white dark:from-gray-900 dark:to-gray-950">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-gray-900 dark:text-gray-100 mb-4">
