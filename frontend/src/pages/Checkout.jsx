@@ -27,13 +27,10 @@ export default function Checkout() {
     setError(null);
 
     try {
-      // We still call the subscribe endpoint, but backend knows price is 0 or handles the upgrade logic
       const { data } = await api.post('/payment/subscribe'); 
       
-      saveLogin(data); // Update local context
+      saveLogin(data); 
       setSuccess(true);
-      
-      // Redirect after a short delay to show success message
       setTimeout(() => {
         navigate('/');
       }, 2500);
