@@ -12,7 +12,7 @@ import { cn } from "@/lib/utils.js";
 import api from '../api/index.js';
 import { useAuth } from '../context/AuthContext.jsx';
 import { Link } from 'react-router-dom';
-// No indianStates needed here
+
 
 export default function JeeAdvanced() {
   const { userInfo } = useAuth();
@@ -23,7 +23,7 @@ export default function JeeAdvanced() {
     category_rank: userInfo?.jee_advanced_category_rank || undefined,
     crl_rank: userInfo?.jee_advanced_crl_rank || undefined,
     gender: 'Male',
-    pws: false, // Added PwS toggle
+    pws: false, e
     branch: [],
     limit: 100
   });
@@ -51,8 +51,6 @@ export default function JeeAdvanced() {
         category_rank: userInfo.jee_advanced_category_rank || prevData.category_rank,
         crl_rank: userInfo.jee_advanced_crl_rank || prevData.crl_rank,
         branch: prevData.branch || [],
-        // You might store pws for advanced separately if needed
-        // pws: userInfo.jee_advanced_pws ?? prevData.pws ?? false, 
       }));
     }
   }, [userInfo]);
@@ -62,7 +60,7 @@ export default function JeeAdvanced() {
     const fetchBranches = async () => {
       try {
         const response = await api.get('api/data/branches');
-        // TODO: Ideally, filter/fetch only IIT branches
+        
         setAllBranches(response.data || []);
       } catch (err) { console.error("Failed to fetch branches:", err); }
     };
@@ -70,7 +68,7 @@ export default function JeeAdvanced() {
   }, []);
 
   // Static options
-  const categories = ["OPEN", "EWS", "OBC-NCL", "SC", "ST"]; // Add PwD variants if needed
+  const categories = ["OPEN", "EWS", "OBC-NCL", "SC", "ST"]; 
   const genders = ["Male", "Female"];
   const limitOptions = [100, 200, 500];
 
@@ -168,14 +166,14 @@ export default function JeeAdvanced() {
               {isCategorySelected ? (
                 <Input id="adv-category-rank" type="number" name="category_rank" placeholder="Category Rank *" value={formData.category_rank ?? ''} onChange={handleInputChange} min={1} required={isCategorySelected}/>
               ) : (
-                <div className="h-[40px] hidden md:block" aria-hidden="true"></div> // Placeholder
+                <div className="h-[40px] hidden md:block" aria-hidden="true"></div> 
               )}
-              {/* --- END FIX --- */}
+              
 
               <Input id="adv-crl-rank" type="number" name="crl_rank" placeholder="CRL Rank *" value={formData.crl_rank ?? ''} onChange={handleInputChange} min={1} required />
             </div>
 
-            {/* Gender Select & PwD */}
+            
              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <Select name="gender" value={formData.gender} onValueChange={handleSelectChange('gender')} required>
                 <SelectTrigger id="adv-gender-select"><SelectValue placeholder="Select Gender *" /></SelectTrigger>
