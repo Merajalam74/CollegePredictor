@@ -7,11 +7,11 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   
   // --- NEW Fields ---
-  mobile: { type: String, unique: true, sparse: true }, // 'sparse: true' allows multiple nulls but only one of each number
-  addressState: { type: String }, // User's billing/permanent state, different from quota state
+  mobile: { type: String, unique: true, sparse: true }, 
+  addressState: { type: String }, 
 
   // --- Rank Details ---
-  home_state: { type: String }, // For quota
+  home_state: { type: String }, 
   jee_mains_pws: {type: Boolean, default: false },
   jee_mains_crl_rank: { type: Number },
   jee_mains_category: { type: String },
