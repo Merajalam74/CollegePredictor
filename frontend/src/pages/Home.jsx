@@ -8,7 +8,7 @@ import { useAuth } from '../context/AuthContext.jsx';
 export default function Home() {
   const { userInfo } = useAuth(); 
   return (
-    <div className="animate-in fade-in-50 duration-500 -mt-10 -mx-4 md:-mx-10"> {/* Negative margin to extend sections */}
+    <div className="animate-in fade-in-50 duration-500 -mt-10 -mx-4 md:-mx-10"> 
 
       {/* --- Hero Section --- */}
       <section className="text-center py-16 md:py-24 bg-gradient-to-b from-primary-blue to-blue-700 text-white">
@@ -113,7 +113,7 @@ export default function Home() {
         </div>
       </section>
 
-      {/* --- How it Works Section --- */}
+      
       <section className="py-16 md:py-20 bg-blue-50 dark:bg-gray-900">
         <div className="container mx-auto px-4">
            <h2 className="text-3xl font-bold text-center mb-12 text-gray-900 dark:text-gray-100">How College Predictor works</h2>
