@@ -28,7 +28,7 @@ export default function VerifyEmail() {
     setError(null);
     setIsLoading(true);
     try {
-      const { data } = await api.post('/auth/verify-email', { email, otp });
+      const { data } = await api.post('api/auth/verify-email', { email, otp });
       saveLogin(data);
       navigate('/');
     } catch (err) {
