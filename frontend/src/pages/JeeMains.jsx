@@ -155,7 +155,7 @@ export default function JeeMains() {
 
     // --- FIX: Send one request per type and wait for all ---
     const requests = counselingsToFetch.map(type =>
-      api.post('/data/predict/mains', { ...basePayload, counseling_type: type })
+      api.post('api/data/predict/mains', { ...basePayload, counseling_type: type })
     );
 
      try {
