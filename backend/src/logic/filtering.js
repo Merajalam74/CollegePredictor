@@ -1,4 +1,3 @@
-// This function replicates your Python filtering logic for JEE Mains
 export function filterCollegesMains(allData, inputs) {
   const { student_category, category_rank, crl_rank, gender, branch, quota } = inputs;
   
@@ -37,14 +36,11 @@ export function filterCollegesMains(allData, inputs) {
     return false;
   });
 
-  // Sort by ClosingRank, ascending, AND limit to 100
   return eligibleRows
     .sort((a, b) => a.ClosingRank - b.ClosingRank)
-    .slice(0, 100); // <-- THIS IS THE CHANGE
+    .slice(0, 100); 
 }
 
-
-// This function replicates your Python filtering logic for JEE Advanced (no quota)
 export function filterCollegesAdvanced(allData, inputs) {
   const { student_category, category_rank, crl_rank, gender, branch } = inputs;
   
@@ -78,8 +74,7 @@ export function filterCollegesAdvanced(allData, inputs) {
     return false;
   });
 
-  // Sort by ClosingRank, ascending, AND limit to 100
   return eligibleRows
     .sort((a, b) => a.ClosingRank - b.ClosingRank)
-    .slice(0, 100); // <-- THIS IS THE CHANGE
+    .slice(0, 100); 
 }
