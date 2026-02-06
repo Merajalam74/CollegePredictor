@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Button } from "@/components/ui/button.jsx";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "@/components/ui/card.jsx";
-import { Separator } from "@/components/ui/separator.jsx";
+import { Separator } from "@/components/ui/Separator.jsx";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert.jsx";
 import { Loader2, ShieldCheck, Lock, CheckCircle2, AlertCircle } from 'lucide-react';
 import api from '../api/index.js';
