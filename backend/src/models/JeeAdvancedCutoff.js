@@ -8,11 +8,8 @@ const jeeAdvancedCutoffSchema = new mongoose.Schema({
   Gender: { type: String, required: true, enum: ['Gender-Neutral', 'Female-only (including supernumerary)'] },
   OpeningRank: { type: Number },
   ClosingRank: { type: Number, required: true, index: true },
-  State: { type: String, index: true }, // State where the IIT is located
+  State: { type: String, index: true }, 
 
-  // --- NEW FIELD FOR ADVANCED SORTING ---
-  // Stores the ClosingRank (CRL) of the corresponding OPEN seat for this
-  // Institute, Branch, and Gender.
   equivalentOpenCrl: {
     type: Number,
     index: true,
@@ -21,7 +18,6 @@ const jeeAdvancedCutoffSchema = new mongoose.Schema({
   
 }, { collection: 'jeeadvancedcutoffs', timestamps: true });
 
-// --- NEW INDEX for sorting ---
 jeeAdvancedCutoffSchema.index({ equivalentOpenCrl: 1, ClosingRank: 1 });
 jeeAdvancedCutoffSchema.index({ Category: 1, Gender: 1, ClosingRank: 1 });
 
