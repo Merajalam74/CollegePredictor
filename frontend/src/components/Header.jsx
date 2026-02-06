@@ -41,16 +41,16 @@ export default function Header() {
 
   // Main navigation links shown on desktop
   const mainNavItems = [
-    { name: 'Home', path: '/' }, // Home is usually the logo link
+    { name: 'Home', path: '/' }, 
     { name: 'JEE Mains', path: '/jee-mains' },
     { name: 'JEE Advanced', path: '/jee-advanced' },
     { name: 'Mentors', path: '/talk-to-senior' }, 
-    // { name: 'Resources', path: '/resources' }, // Example link
+    // { name: 'Resources', path: '/resources' }, 
   ];
 
   // Links shown in mobile sheet menu
   const mobileNavItems = [
-    ...(userInfo ? [{ name: 'Profile', path: '/profile', icon: <UserCircle className="h-5 w-5" /> }] : []), // Profile only if logged in
+    ...(userInfo ? [{ name: 'Profile', path: '/profile', icon: <UserCircle className="h-5 w-5" /> }] : []), 
     { name: 'Home', path: '/', icon: <GraduationCap className="h-5 w-5" /> },
     { name: 'JEE Mains', path: '/jee-mains', icon: <GraduationCap className="h-5 w-5" /> },
     { name: 'JEE Advanced', path: '/jee-advanced', icon: <Sparkles className="h-5 w-5" /> },
@@ -71,7 +71,7 @@ export default function Header() {
         </Link>
 
         {/* --- DESKTOP NAVIGATION --- */}
-        <div className="hidden md:flex items-center gap-4"> {/* Increased gap */}
+        <div className="hidden md:flex items-center gap-4"> 
           {mainNavItems.map((item) => (
             <Link to={item.path} key={item.path}>
               <Button variant="ghost" className="text-white hover:bg-white/10 px-3 py-2 font-medium">
@@ -82,12 +82,12 @@ export default function Header() {
 
           {/* Conditional Buttons: Profile or Auth */}
           {userInfo ? (
-            <AlertDialog> {/* AlertDialog wraps Dropdown for logout confirmation */}
+            <AlertDialog> 
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" className="flex items-center gap-2 text-white hover:bg-white/10 px-3 py-2 font-medium">
                     <UserCircle className="h-5 w-5" />
-                    {userInfo.name?.split(' ')[0]} {/* Show first name */}
+                    {userInfo.name?.split(' ')[0]} 
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end" className="mt-2">
