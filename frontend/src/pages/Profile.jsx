@@ -18,25 +18,25 @@ import {
   DialogTrigger,
   DialogClose,
 } from "@/components/ui/dialog.jsx";
-import { indianStates } from '../utils/constants.js'; // <-- *** THIS IS THE FIX ***
+import { indianStates } from '../utils/constants.js'; 
 
 export default function Profile() {
   const { userInfo, saveLogin } = useAuth();
   const [editData, setEditData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [pageError, setPageError] = useState(null); // For errors outside dialog
+  const [pageError, setPageError] = useState(null); 
   const [success, setSuccess] = useState(null);
   const [isEditOpen, setIsEditOpen] = useState(false);
 
-  // --- NEW State for Mobile Verification ---
+  
   const [isVerifyOpen, setIsVerifyOpen] = useState(false);
   const [otp, setOtp] = useState("");
   const [verifyError, setVerifyError] = useState(null);
   const [verifySuccess, setVerifySuccess] = useState(null);
   const [isSendingOtp, setIsSendingOtp] = useState(false);
 
-  // Pre-fill edit form when userInfo loads or dialog opens
+  
   useEffect(() => {
     if (userInfo) {
       setEditData({
@@ -53,9 +53,8 @@ export default function Profile() {
         jee_advanced_category_rank: userInfo.jee_advanced_category_rank ?? '',
       });
     }
-  }, [userInfo, isEditOpen]); // Re-run if userInfo changes or dialog state changes
-
-  // Redirect if not logged in
+  }, [userInfo, isEditOpen]); 
+  
   if (!userInfo) {
     return <Navigate to="/login" />;
   }
@@ -77,11 +76,11 @@ export default function Profile() {
     e.preventDefault(); setIsLoading(true); setError(null); setSuccess(null); setPageError(null);
     try {
       const { data } = await api.put('/auth/profile', editData);
-      saveLogin(data); // Update user info in context/localStorage with the response
+      saveLogin(data); 
       setSuccess("Profile updated successfully!");
-      setIsEditOpen(false); // Close the dialog on success
+      setIsEditOpen(false);
     } catch (err) {
-      setError(err.response?.data?.message || "Failed to update profile."); // Show error inside dialog
+      setError(err.response?.data?.message || "Failed to update profile."); 
     } finally {
       setIsLoading(false);
     }
@@ -92,7 +91,7 @@ export default function Profile() {
     setIsSendingOtp(true); setVerifyError(null); setVerifySuccess(null);
     try {
       const { data } = await api.post('/auth/send-mobile-otp');
-      setVerifySuccess(data.message); // e.g., "OTP sent..."
+      setVerifySuccess(data.message);
     } catch (err) {
       setVerifyError(err.response?.data?.message || "Failed to send OTP.");
     } finally {
@@ -106,9 +105,9 @@ export default function Profile() {
      setIsLoading(true); setVerifyError(null); setVerifySuccess(null);
      try {
        const { data } = await api.post('/auth/verify-mobile-otp', { otp });
-       saveLogin(data); // Update context with new verified status
+       saveLogin(data); 
        setVerifySuccess("Mobile number verified successfully!");
-       setIsVerifyOpen(false); // Close dialog
+       setIsVerifyOpen(false); 
      } catch (err) {
        setVerifyError(err.response?.data?.message || "Verification failed.");
      } finally {
