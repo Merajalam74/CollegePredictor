@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   registerUser, loginUser, getUserProfile, verifyEmail, updateUserProfile,
-  sendMobileOTP, verifyMobileOTP // <-- Import new functions
+  sendMobileOTP, verifyMobileOTP 
 } from '../controllers/authController.js';
 import { protect } from '../middleware/authMiddleware.js';
 
@@ -17,7 +17,7 @@ router.route('/profile')
   .get(protect, getUserProfile)
   .put(protect, updateUserProfile);
 
-// --- NEW Mobile Verification Routes (Protected) ---
+// ---Mobile Verification Routes (Protected) ---
 router.post('/send-mobile-otp', protect, sendMobileOTP);
 router.post('/verify-mobile-otp', protect, verifyMobileOTP);
 
