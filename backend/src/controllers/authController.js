@@ -17,14 +17,14 @@ export const registerUser = async (req, res) => {
     if (mobile && await User.findOne({ mobile })) return res.status(400).json({ message: 'Mobile number already in use' });
 
     const otp = Math.floor(100000 + Math.random() * 900000).toString();
-    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
+    const otpExpires = new Date(Date.now() + 10 * 60 * 1000); 
 
     const user = await User.create({
       name, email, password, mobile, addressState,
       home_state, jee_mains_pws: pws, ...ranks,
       emailVerificationOTP: otp,
       emailVerificationExpires: otpExpires,
-      isEmailVerified: false // Explicitly false
+      isEmailVerified: false 
     });
 
     if (user) {
@@ -77,7 +77,7 @@ export const verifyEmail = async (req, res) => {
   }
 };
 
-// --- loginUser (UPDATED LOGIC) ---
+// --- loginUser  ---
 export const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -90,7 +90,6 @@ export const loginUser = async (req, res) => {
 
     // 2. Check Verification Status
     if (!user.isEmailVerified) {
-      // Logic: User is authentic but unverified. Generate NEW OTP.
       const newOtp = Math.floor(100000 + Math.random() * 900000).toString();
       user.emailVerificationOTP = newOtp;
       user.emailVerificationExpires = new Date(Date.now() + 10 * 60 * 1000); // 10 mins
@@ -103,7 +102,7 @@ export const loginUser = async (req, res) => {
       return res.status(403).json({ 
         message: 'Email not verified. A new OTP has been sent to your email.',
         email: user.email,
-        requiresVerification: true // Flag for Frontend to open OTP modal
+        requiresVerification: true 
       });
     }
 
@@ -130,7 +129,6 @@ export const loginUser = async (req, res) => {
   }
 };
 
-// ... (Rest of the controller functions: getUserProfile, updateUserProfile, sendMobileOTP, verifyMobileOTP remain unchanged) ...
 export const getUserProfile = async (req, res) => {
   if (req.user) { res.json(req.user); } else { res.status(404).json({ message: 'User not found' }); }
 };
