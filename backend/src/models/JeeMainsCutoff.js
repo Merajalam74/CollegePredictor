@@ -13,20 +13,15 @@ const jeeMainsCutoffSchema = new mongoose.Schema({
   State: { type: String, required: true, index: true },
   IsNIT: { type: Boolean, default: false, index: true },
 
-  // --- NEW FIELD FOR ADVANCED SORTING ---
-  // Stores the ClosingRank (CRL) of the corresponding OPEN seat for this
-  // Institute, Branch, Quota, Gender, and CounselingType.
   equivalentOpenCrl: {
     type: Number,
     index: true,
-    default: 9999999 // Default to a high number (sorts last) if no OPEN equivalent
+    default: 9999999 
   }
 
 }, { collection: 'jeemainscutoffs', timestamps: true });
 
-// --- Compound Indexes for Query Performance ---
 jeeMainsCutoffSchema.index({ CounselingType: 1, Category: 1, Quota: 1, Gender: 1, ClosingRank: 1, State: 1 });
-// --- NEW INDEX for sorting ---
 jeeMainsCutoffSchema.index({ CounselingType: 1, equivalentOpenCrl: 1, ClosingRank: 1 });
 
 const JeeMainsCutoff = mongoose.model('JeeMainsCutoff', jeeMainsCutoffSchema);
