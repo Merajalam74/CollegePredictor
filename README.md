@@ -47,4 +47,4 @@ Follow these steps to run the project locally.
 
 ### 1. Clone the Repository
 ```bash
-git clone 
+git clone https://github.com/Merajalam74/CollegePredictor.git
