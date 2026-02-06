@@ -28,9 +28,6 @@ export const createSubscription = async (req, res) => {
 
     // 4. Update User Data
     user.subscription = 'premium';
-    
-    // Optional: Save payment history if your User model supports it
-    // If you haven't defined this field in Schema yet, Mongoose will just ignore it, which is fine.
     if (!user.paymentHistory) user.paymentHistory = [];
     user.paymentHistory.push({
       orderId: orderId,
@@ -42,8 +39,6 @@ export const createSubscription = async (req, res) => {
 
     await user.save();
 
-    // 5. Send Professional Email in Background
-    // We don't await this so the UI response is instant
     sendOrderConfirmationEmail(user.email, user.name, orderId)
       .catch(err => console.error("Background Email Error:", err));
 
