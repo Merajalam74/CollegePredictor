@@ -7,13 +7,13 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext.jsx';
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert.jsx";
 import { AlertCircle, Loader2 } from 'lucide-react';
-import { indianStates } from '../utils/constants'; // Make sure you have this file
+import { indianStates } from '../utils/constants'; 
 
 export default function Signup() {
-  // Use state for mobile to control its value
+  
   const [mobileNumber, setMobileNumber] = useState("");
   const [formData, setFormData] = useState({
-     pws: 'No' // Default PwD to 'No'
+     pws: 'No' 
   });
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -26,13 +26,13 @@ export default function Signup() {
 
   // --- NEW: Mobile input handler ---
   const handleMobileChange = (e) => {
-    // 1. Remove non-numeric characters
+    
     const numericValue = e.target.value.replace(/[^0-9]/g, '');
-    // 2. Enforce 10-digit limit
+    
     const truncatedValue = numericValue.slice(0, 10);
-    setMobileNumber(truncatedValue); // Update the specific mobile state
-    // Also update the main formData
-    setFormData(prev => ({ ...prev, mobile: `+91${truncatedValue}` })); // Store with country code
+    setMobileNumber(truncatedValue); 
+    
+    setFormData(prev => ({ ...prev, mobile: `+91${truncatedValue}` })); 
   };
 
   const handleSelectChange = (name) => (value) => {
@@ -53,9 +53,9 @@ export default function Signup() {
     try {
       const payload = {
         ...formData,
-        // Convert PwD to boolean
+        
         pws: formData.pws === 'Yes',
-        // Ranks
+        
         jee_mains_crl_rank: Number(formData.jee_mains_crl_rank) || undefined,
         jee_mains_category_rank: Number(formData.jee_mains_category_rank) || undefined,
         jee_advanced_crl_rank: Number(formData.jee_advanced_crl_rank) || undefined,
@@ -101,13 +101,13 @@ export default function Signup() {
               </span>
               <Input
                 name="mobile"
-                type="tel" // Use 'tel' for semantic mobile input
+                type="tel" 
                 placeholder="10-digit Mobile Number"
-                value={mobileNumber} // Controlled by mobileNumber state
-                onChange={handleMobileChange} // Use specific handler
-                className="rounded-l-none" // Remove left border radius
+                value={mobileNumber} 
+                onChange={handleMobileChange} 
+                className="rounded-l-none" 
                 required
-                pattern="[0-9]{10}" // HTML5 validation
+                pattern="[0-9]{10}" 
                 title="Please enter exactly 10 digits"
               />
             </div>
